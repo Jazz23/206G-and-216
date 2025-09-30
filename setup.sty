@@ -1,0 +1,29 @@
+
+\ProvidesPackage{setup}
+
+\usepackage[a4paper, margin=1in]{geometry} % Paper size and margins
+\usepackage{amsmath}    % Mathematical environments like align
+\usepackage{amsfonts}   % Additional math symbols
+\usepackage{amssymb}    % More symbols
+\usepackage{mathtools}  % Enhancements to amsmath
+\usepackage{bm}         % Bold math symbols
+\usepackage{graphicx}   % For including images (optional)
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{forest}
+\usepackage{tikz}
+
+\hypersetup{
+    colorlinks=true,     % Use colored links
+    linkcolor=blue,    % Color of internal links
+    citecolor=blue,    % Color of citations
+    urlcolor=blue      % Color of external links
+}
+
+\setlength{\parskip}{0.6em}
+\setlength{\jot}{0.6em}
+
+\providecommand{\ceil}[1]{\left \lceil #1 \right \rceil }
+\providecommand{\floor}[1]{\left \lfloor #1 \right \rfloor }
+% Command \Pr{} that does \text{Pr}\{ \}
+\renewcommand{\Pr}[1]{\text{Pr}\left\{ #1 \right\}}
