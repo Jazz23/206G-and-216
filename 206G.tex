@@ -3,7 +3,28 @@
 \begin{document}
 
 \begin{itemize}
-  \item A strategy profile is an assignment of strategies for each player
+  \item $s$ is a strategy profile which is an assignment of strategies for each player. E.g. $s = (N,S)$ is a strategy profile for 2 players where player 1 goes north and player 2 goes south.
+  \item $s_i$ is the chosen strategy (chosen action) for player $i$ given profile $s$. E.g. for the strategy profile $s = (N, S)$, $s_1 = N$, aka player 1 chooses the north strategy.
+  \item $S_i$ is the set of strategies available to player $i$. E.g. $S_1 = \{N, S\}$, aka player 1 can choose either north or south. For a symmetrical game, $S_1 = S_2$.
+  \item $u_i(s)$ is the utility (payoff) for player $i$ given strategy profile $s$. E.g. for the strategy profile $s = (N, S)$, $u_1(N, S) = 1$, aka player 1 receives a payoff of 1 when they choose north and player 2 chooses south.
+  \item $\sigma$ is a mixed strategy profile. E.g. $\sigma = ((0.5, 0.5), (0.25, 0.75))$ is a mixed strategy profile for 2 players where player 1 chooses north with probability 0.5 and south with probability 0.5, and player 2 chooses north with probability 0.25 and south with probability 0.75.
+  \item $\sigma_i$ is the mixed strategy for player $i$ given mixed profile $\sigma$. E.g. for the mixed strategy profile above, $\sigma_1 = (0.5, 0.5)$, aka player 1 chooses north with probability 0.5 and south with probability 0.5.
+ \item $\sigma_i(s_i)$ is the probability that player $i$ chooses strategy $s_i$ given mixed strategy $\sigma_i$. E.g. for the mixed strategy $\sigma_1 = (0.5, 0.5)$, $\sigma_1(N) = 0.5$, aka player 1 chooses north with probability 0.5.
+  \item $\Sigma_i$ is the set of mixed strategies available to player $i$. E.g. $\Sigma_1 = \{(p, 1-p)\ |\ 0 \leq p \leq 1\}$, aka player 1 can choose any probability distribution over their strategies.
+  \item $u_i(\sigma)$ is the expected utility (expected payoff) for player $i$ given mixed strategy profile $\sigma$.\[u_i(\sigma) = \sum_{s\in S}\left(\prod_{j=1}^I\sigma_j(s_j)\right)u_i(s)\]
+  Steps to find $u_i(\sigma)$:
+    \begin{itemize}
+      \item For each strategy profile $s$ in the set of all strategy profiles $S$:
+      \item Calculate the probability of that strategy profile occurring by multiplying the probabilities of each player choosing their respective strategies in that profile.
+      \item Multiply that probability by the utility (payoff) for player $i$ given that strategy profile.
+      \item Sum these values over all strategy profiles to get the expected utility for player $i$.
+    \end{itemize}
+  For the mixed strategy profile $\sigma = ((0.5, 0.5), (0.25, 0.75))$, the expected utility for player $i$ is:
+  \begin{align*}
+      u_i(\sigma) =\ &\sigma_1(N)\sigma_2(N)u_i(N, N) + \sigma_1(N)\sigma_2(S)u_i(N, S) \\
+  &+ \sigma_1(S)\sigma_2(N)u_i(S, N) + \sigma_1(S)\sigma_2(S)u_i(S, S)
+  \end{align*}
+  
   \item A pure strategy is discrete: either north or south for example
   \item A mixed Nash equilibrium is the best outcome for both players when they're using mixed strategies (where the strategy is a probability of going north or south rather than a discrete north or south choice).
   \item A simplex is when each component adds to 1, e.g. $x+y=1$ $\leftarrow$ 2 strategy game.
