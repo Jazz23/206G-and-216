@@ -2,13 +2,42 @@
 \usepackage{setup}
 \begin{document}
 
-Implication: When P is true, Q must be true. False implies true.
+\section*{Propositional Logic}
+\subsection{Definitions}
 
-% bulleted list
 \begin{itemize}
+\item Implication: When P is true, Q must be true. False implies true.
 \item $P \implies Q \equiv \neg P \lor Q$
 \item If $\sigma$ is an assignment and $\phi$ is a formula, then $\sigma \models \phi$ (sigma satisfies phi) means $\phi$ is true under assignment $\sigma$.
 \item A formula $\phi$ is satisfiable if there exists an assignment $\sigma$ such that $\sigma \models \phi$. Otherwise, we say it's unsatisfiable.
+\item A formula is valid (aka a tautology) if for every assignment $\sigma$, $\sigma \models \phi$.
+\item Two formulas $\phi$ and $\psi$ are logically equivalent, denoted $\phi \equiv \psi$, if for every assignment $\sigma$, $\sigma \models \phi$ iff $\sigma \models \psi$.
+\item Formulas $\phi$ and $\psi$ are equisatisfiable if $\phi$ is satisfiable iff $\psi$ is satisfiable.
+\end{itemize}
+
+\subsection{The Boolean Satisfiability Problem (SAT)}
+\begin{itemize}
+\item Given a propositional formula $\phi$, is $\phi$ satisfiable?
+\item Example: System M with input x and output y and an input-output specification $\phi(x, y)$. If we can encode the computation of M as a formula $\psi_m(x,y)$ such that this formula holds iff y is the output of M on input x ($\psi_m$ is called the input-output relation or transition relation of M), then we can decide whether M satisfies $\phi$ for all inputs using this formula: \[\chi = \psi_m(x, y) \land \neg \phi(x, y)\] The formula is satisfiable iff $M\not\models \phi$, ie there is some input x such that M violates $\phi$ on that input. So to verify M, we can check if $\chi$ is unsatisfiable.
+\item Usually when we refer to SAT, we are referring to the CNF-SAT problem, where the input formula is in conjunctive normal form (CNF).
+\item A formula is in CNF if it is a conjunction of clauses, where each clause is a disjunction (OR) of literals, and a literal is either a variable or the negation of a variable. Example: \[(x_1 \lor \neg x_2 \lor x_3) \land (\neg x_1 \lor x_4) \land (x_2 \lor x_3 \lor \neg x_4)
+\]
+\item The top level operator must be an AND.
+\item Any formula can be converted to CNF.
+\item A useful transformation is the Tseitin transformation, which converts any formula $\phi$ to an equisatisfiable CNF formula $\psi$ in linear time. The idea is to introduce a new variable for each subformula of $\phi$ and add clauses that enforce the equivalence between the new variable and the subformula. Example: \begin{align*}
+\phi = \neg(x\lor y)\lor(\neg z\land x) \\
+\text{List the cases for the clause (gate) (call the output the clause u):} \\
+x\implies \neg u \\
+y\implies \neg u \\
+\neg x \land \neg y \implies u \\
+\text{Using demorgans law, we can rewrite these as:} \\
+\neg x \lor \neg u \\
+\neg y \lor \neg u \\
+x \lor y \lor u
+\end{align*}
+These three clauses uniquely determine u given values for x and y (among satisfying assignments). Repeating this for every gate in the circuit gives a set of clauses encoding how the whole circuit works. Then add one more clause asserting that the output wire is true. Now any satisfying assignment of the original formula can be extended to one satisfying the new formula, and conversely any satisfying assignment of the new formula satisfies the original.
+\item Since there is 1 gate per boolean operator, and a constant number of clauses per gate, the new CNF formula has size linear in the size of the original formula.
+\item Disjunctive Normal Form (DNF) is the dual of CNF, where the top level operator is OR and each clause is an AND of literals. Example: \[(x_1 \land \neg x_2 \land x_3) \lor (\neg x_1 \land x_4) \lor (x_2 \land x_3 \land \neg x_4)\]
 \end{itemize}
 
 \end{document}
