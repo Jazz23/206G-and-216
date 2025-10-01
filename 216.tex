@@ -33,11 +33,14 @@ y\implies \neg u \\
 \text{Using demorgans law, we can rewrite these as:} \\
 \neg x \lor \neg u \\
 \neg y \lor \neg u \\
-x \lor y \lor u
+x \lor y \lor u\\
+\text{AND them all together to represent the first gate!} \\
+(\neg x \lor \neg u) \land (\neg y \lor \neg u) \land (x \lor y \lor u)
 \end{align*}
 These three clauses uniquely determine u given values for x and y (among satisfying assignments). Repeating this for every gate in the circuit gives a set of clauses encoding how the whole circuit works. Then add one more clause asserting that the output wire is true. Now any satisfying assignment of the original formula can be extended to one satisfying the new formula, and conversely any satisfying assignment of the new formula satisfies the original.
 \item Since there is 1 gate per boolean operator, and a constant number of clauses per gate, the new CNF formula has size linear in the size of the original formula.
 \item Disjunctive Normal Form (DNF) is the dual of CNF, where the top level operator is OR and each clause is an AND of literals. Example: \[(x_1 \land \neg x_2 \land x_3) \lor (\neg x_1 \land x_4) \lor (x_2 \land x_3 \land \neg x_4)\]
 \end{itemize}
+
 
 \end{document}
