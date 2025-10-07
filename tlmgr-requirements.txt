@@ -2,3 +2,4 @@ mathtools
 algorithmicx
 etoolbox
 forest
+enumitem

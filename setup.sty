@@ -12,6 +12,13 @@
 \usepackage{hyperref}
 \usepackage{forest}
 \usepackage{tikz}
+\usepackage{array}
+\usepackage{enumitem}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newcommand{\circnum}[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=1pt](char){#1};}}
 
 \hypersetup{
     colorlinks=true,     % Use colored links

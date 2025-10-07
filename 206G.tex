@@ -43,18 +43,17 @@
     \end{itemize}
 \end{itemize}
 
-\newpage
 \section*{Lecture 3}
 \begin{itemize}
   \item A symmetric 2 player game happens when $B = A^T$, where $A$ and $B$ are the matrices of the payoff for each player.
   \item Let probability vector x be P1's mixed strategy. Let y be player 2's mixed strategy. E.g. $y=(0.5, 0.5)$.
-  \item The vecotr of pyaooff for P1's pure strategies is $Ay$, where $A$ is a matrix of payoffs and $y$ is a vector of probabilities.
+  \item The vector of payoff for P1's pure strategies is $Ay$, where $A$ is a matrix of payoffs and $y$ is a vector of probabilities.
   \item P1 gets $x^tAy$. This ends up being a single number. P2 gets $x^tBy$.
   \item $Ay$ is a column vector of payoffs for each of p1's pure strategies.
-  \item P1's best response correspondence is \[r_1(y)=\text{argmax}\  x:\ x \ge 0 \quad\text{and}\quad ||x||_1 = 1\quad\text{of}\quad x^tAy\]
+  \item P1's best response correspondence is \[r_1(y)=\argmax_{x \ge 0 \quad\text{and}\quad ||x||_1 = 1}x^tAy\]
   \item $||x||_1=1$ means all components of $x$ add to 1.
   \item Best response can have a mix only when there are ties in the vector $Ay$.
-  \item P2 best response correspondence is \[r_2(x)=\text{argmax}\ y (x^tBy)\]
+  \item P2 best response correspondence is \[r_2(x)=\argmax_y x^tBy\]
   \item A nash equilibrium is a pair $(x^*, y^*)$ such that $x^* \in r_1(y^*)$ and $y^* \in r_2(x^*)$.
   \item For any 2 player game given by (A, B) we can define a related symmetric game $(\tilde{A}, \tilde{B})$ where \[\tilde{A} = \begin{bmatrix} 0 & A \\ B^T & 0 \end{bmatrix}\] and \[\tilde{B} = \tilde{A}^T = \begin{bmatrix} 0 & B \\ A^T & 0 \end{bmatrix}\]
   \item Claim: If $(x^*, y^*)$ is a nash equilibrium for $(\tilde{A}, \tilde{B})$, then $(\frac{x^*}{||x^*||_1}, \frac{y^*}{||y^*||_1})$ is a nash equilibrium for $(A, B)$.
