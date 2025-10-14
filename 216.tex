@@ -129,4 +129,44 @@ These three clauses uniquely determine u given values for x and y (among satisfy
 \item How many satisfying assignments are there? Idea: think about all paths from the root to the true leaf.
 \end{itemize}
 
+\section*{SAT Solving}
+\begin{itemize}
+    \item Motivation: Avoid BDD blowup by trading time for memory. SAT solvers don't run out of memory, but they may search for a long time.
+    \item SAT is NP-complete. All known algorithms for SAT take more than polynomial time in the worst case. But this does not rule out practical algorithms.
+    \item NP-completeness doesn't imply that all SAT problems take exponential time. There are some special cases which are solvable efficiently.
+    \begin{itemize}
+        \item Horn clauses: CNF-SAT. Each clause has at most one positive literal. E.g. \[(\neg x_1 \lor \neg x_2 \lor x_3) \land (\neg x_2 \lor \neg x_3) \land (x_1) \land (\neg x_1 \lor x_3)\]
+        This is equivalent to implications whose left hand sides are conjunctions of variables. E.g. \[(x_1 \land x_2 \implies x_3) \land (x_2 \land x_3 \implies \text{false}) \land (\text{true} \implies x_1) \land (x_1 \implies x_3)\]
+        \item 2SAT: CNF-SAT where each clause has at most 2 literals. E.g. \[(x_1 \lor \neg x_2) \land (\neg x_2 \lor x_3) \land (\neg x_1 \lor x_3) \land (\neg x_1 \lor \neg x_3)\]
+    \end{itemize}
+    \item For general SAT, there are heuristic algorithms that tend to work well in practice even though their runtimes are exponential in the worst case.
+    \item We'll look at search algorithms which the space of assignment looking for a satisfying assignment.
+    \item Simplest approach: Check all $2^n$ assignments by brute force. Guaranteed to take exponential time if the formula is UNSAT.
+    \item Better way: Search through partial assignments, pruning away parts of the space that can't possibly satisfy the formula.
+    \item First algorithm: Backtracking search. Divide and conquer. Split the space on some variable, assign it to true and false respectively (reducing the number of variables by 1). Solve those subproblems recursively. If $x=F$ doesn't work, backtrack by undoing that assignment and trying $x=T$ instead.
+    \item DPLL algorithm: Backtracking search with better formula simplification during search.
+   \item Unit propagation: A clause with only one literal (a unit clause) forces a variable to be true/false. Clauses can become unit after a partial assignment. You then don't split on the remaining variable, you simply assign it accordingly and continue. Then we can propagate this assignment to potentially force further assignments. (Note: $T\lor\neg y$ is not considered a unit since it is already satisfied.) If UP yields a contradiction this is a conflict: An assignment might falsify a conflicting clause.
+    \item Pure literal elimination: If a variable appears with only one polarity (always negated or always unnegated) in the formula, it can be assigned to satisfy all those clauses and removed from the formula. E.g. in \[(x_1 \lor \neg x_2) \land (\neg x_2 \lor x_3) \land (\neg x_1 \lor x_3) \land (\neg x_1 \lor \neg x_3) \land (x_4 \lor x_1)\] $x_4$ is a pure literal and can be set to true and removed.
+    \item DPLL algorithm summary:
+    \begin{enumerate}
+        \item $\varphi \leftarrow$ simplify($\varphi$). Apply UP and PLE until reaching a fixpoint.
+        \item If we encountered a conflict, return UNSAT.
+        \item If $\varphi$ is empty (all clauses satisfied), return SAT.
+        \item Pick a variable $x$ in $\varphi$.
+        \item If DPLL($\varphi\land x$) = SAT, return SAT.
+        \item If DPLL($\varphi\land \neg x$) = SAT, return SAT.
+        \item Return UNSAT.
+    \end{enumerate}
+    Correctness: $\varphi$ is satisfiable iff either $\varphi\land x$ or $\varphi\land \neg x$ is satisfiable.
+    \item Issues: Keeping track of different simplified formulas. Finding unit clauses efficiently (naive implementation would have to scan every clause wherever we make an assignment). Can encounter the same conflict many times, searching parts of the space that can't possibly work.
+    \item Solution: Learn a clause after each conflict that eliminates the partial assignment which led to the conflict (the reason for the conflict). Later, this ``conflict clause'' (here $x_1\lor x_1000$) will trigger unit propagation before we would hit the same conflict again.
+\end{itemize}
+
+\section*{Conflict-driven clause learning (CDCL) algorithm.}
+
+\begin{itemize}
+    \item Notation: Assigning a value to a unassigned variable when there is no UP left to do is called a decision. All assigned variables during the search are either decision variables or implied by UP. The decision level (DL) of a variable is the depth of the search tree when it was assigned.
+    \item We'll write $\neg x_5 @ 7$ to mean $x_5$ was assigned false at decision level 7.
+\end{itemize}
+
 \end{document}

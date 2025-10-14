@@ -5,6 +5,8 @@
         "equisatisfiable",
         "Satisfiability",
         "subformula",
-        "Tseitin"
+        "subproblems",
+        "Tseitin",
+        "unnegated"
     ]
 }
